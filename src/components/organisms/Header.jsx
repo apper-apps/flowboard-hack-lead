@@ -9,9 +9,11 @@ const Header = ({ onMobileMenuToggle }) => {
   const navigate = useNavigate()
   const [showUserMenu, setShowUserMenu] = useState(false)
 
-  const currentUser = {
-    name: "Alex Johnson",
-    email: "alex.johnson@company.com",
+const { useSelector } = require('react-redux');
+  const userState = useSelector((state) => state.user);
+  const currentUser = userState?.user || {
+    name: "User",
+    email: "user@company.com",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
   }
 
@@ -111,9 +113,18 @@ const Header = ({ onMobileMenuToggle }) => {
                     <ApperIcon name="HelpCircle" className="h-4 w-4" />
                     Help
                   </button>
-                  <div className="border-t border-gray-100 mt-2">
+<div className="border-t border-gray-100 mt-2">
                     <button
-                      onClick={() => setShowUserMenu(false)}
+                      onClick={async () => {
+                        setShowUserMenu(false)
+                        try {
+                          const { ApperUI } = window.ApperSDK;
+                          await ApperUI.logout();
+                          navigate('/login');
+                        } catch (error) {
+                          console.error("Logout failed:", error);
+                        }
+                      }}
                       className="w-full text-left px-4 py-2 text-sm text-error hover:bg-error/5 flex items-center gap-2"
                     >
                       <ApperIcon name="LogOut" className="h-4 w-4" />
