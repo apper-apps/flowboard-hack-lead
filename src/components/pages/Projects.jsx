@@ -19,9 +19,9 @@ const Projects = () => {
   const [error, setError] = useState("")
   const [showProjectModal, setShowProjectModal] = useState(false)
   const [selectedProject, setSelectedProject] = useState(null)
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "")
+const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "")
   const [statusFilter, setStatusFilter] = useState("")
-
+  const [appliedStatusFilter, setAppliedStatusFilter] = useState("")
   const filters = [
     {
       key: "status",
@@ -40,9 +40,9 @@ const Projects = () => {
     loadProjects()
   }, [])
 
-  useEffect(() => {
+useEffect(() => {
     filterProjects()
-  }, [projects, searchQuery, statusFilter])
+  }, [projects, searchQuery, appliedStatusFilter])
 
   const loadProjects = async () => {
     try {
@@ -68,15 +68,16 @@ const Projects = () => {
       )
     }
 
-    if (statusFilter) {
-      filtered = filtered.filter(project => project.status === statusFilter)
+if (appliedStatusFilter) {
+      filtered = filtered.filter(project => project.status === appliedStatusFilter)
     }
 
     setFilteredProjects(filtered)
   }
 
-  const handleSearch = (query) => {
+const handleSearch = (query) => {
     setSearchQuery(query)
+    setAppliedStatusFilter(statusFilter)
     if (query) {
       setSearchParams({ search: query })
     } else {
