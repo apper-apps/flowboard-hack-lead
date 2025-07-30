@@ -112,8 +112,8 @@ return (
 
         {/* Form Content - Scrollable */}
         <div className="flex-1 overflow-y-auto custom-scrollbar">
-          <form onSubmit={handleSubmit} className="flex flex-col h-full">
-            <div className="flex-1 p-6 space-y-4">
+          <form id="project-form" onSubmit={handleSubmit}>
+            <div className="p-6 space-y-4">
               <FormField
                 label="Project Title"
                 required
@@ -164,7 +164,7 @@ return (
                 label="Deadline"
                 required
                 error={errors.deadline}
->
+              >
                 <Input
                   type="date"
                   value={formData.deadline}
@@ -188,29 +188,30 @@ return (
                 />
               </FormField>
             </div>
-
-            {/* Actions - Fixed at bottom */}
-            <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white rounded-b-2xl">
-              <div className="flex justify-end gap-3">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={onClose}
-                  className="min-w-[80px]"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="min-w-[120px]"
-                >
-                  {loading && <ApperIcon name="Loader2" className="h-4 w-4 mr-2 animate-spin" />}
-                  {project ? "Update Project" : "Create Project"}
-                </Button>
-              </div>
-            </div>
           </form>
+        </div>
+
+        {/* Actions - Fixed at bottom */}
+        <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white rounded-b-2xl">
+          <div className="flex justify-end gap-3">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={onClose}
+              className="min-w-[80px]"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="project-form"
+              disabled={loading}
+              className="min-w-[120px]"
+            >
+              {loading && <ApperIcon name="Loader2" className="h-4 w-4 mr-2 animate-spin" />}
+              {project ? "Update Project" : "Create Project"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
