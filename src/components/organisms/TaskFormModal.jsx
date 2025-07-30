@@ -85,7 +85,7 @@ const TaskFormModal = ({ projectId, task, isOpen, onClose, onSave }) => {
         dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString() : null
       }
 
-      let savedTask
+let savedTask
       if (task) {
         savedTask = await taskService.update(task.Id, taskData)
         toast.success("Task updated successfully")
@@ -94,7 +94,10 @@ const TaskFormModal = ({ projectId, task, isOpen, onClose, onSave }) => {
         toast.success("Task created successfully")
       }
 
-      onSave?.(savedTask)
+      // Notify parent component about the saved task
+      if (onSave) {
+        onSave(savedTask)
+      }
       onClose()
     } catch (err) {
       toast.error(task ? "Failed to update task" : "Failed to create task")

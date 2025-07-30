@@ -138,11 +138,16 @@ const MyTasks = () => {
     setShowTaskModal(true)
   }
 
-  const handleTaskUpdate = (updatedTask) => {
+const handleTaskUpdate = async (updatedTask) => {
+    // Update local state immediately for responsive UI
     setTasks(prev => prev.map(task => 
       task.Id === updatedTask.Id ? updatedTask : task
     ))
     setSelectedTask(updatedTask)
+    
+    // Reload all data to ensure newly created tasks are visible
+    // This is especially important for tasks that might not be assigned to current user
+    await loadData()
   }
 
   const handleStatusChange = async (taskId, newStatus) => {
