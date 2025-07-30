@@ -1,4 +1,4 @@
-import projectsData from "@/services/mockData/projects.json"
+import projectsData from "@/services/mockData/projects.json";
 
 let projects = [...projectsData]
 
@@ -56,7 +56,7 @@ export const projectService = {
     return true
   },
 
-  async updateProgress(id, percentage) {
+async updateProgress(id, percentage) {
     await delay(200)
     const index = projects.findIndex(p => p.Id === parseInt(id))
     if (index === -1) {
@@ -68,5 +68,15 @@ export const projectService = {
       updatedAt: new Date().toISOString()
     }
     return { ...projects[index] }
-  }
+  },
+
+  async getByDateRange(startDate, endDate) {
+    await delay(250)
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    return projects.filter(project => {
+      const deadline = new Date(project.deadline)
+      return deadline >= start && deadline <= end
+    })
+}
 }

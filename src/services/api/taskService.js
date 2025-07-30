@@ -79,7 +79,7 @@ export const taskService = {
     return true
   },
 
-  async search(query) {
+async search(query) {
     await delay(300)
     const lowercaseQuery = query.toLowerCase()
     return tasks.filter(task => 
@@ -87,5 +87,30 @@ export const taskService = {
       task.description.toLowerCase().includes(lowercaseQuery) ||
       task.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery))
     )
+  },
+
+  async getByDateRange(startDate, endDate) {
+    await delay(250)
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    return tasks.filter(task => {
+      if (!task.dueDate) return false
+      const taskDate = new Date(task.dueDate)
+      return taskDate >= start && taskDate <= end
+    })
+  },
+
+  async updateDueDate(id, dueDate) {
+    await delay(200)
+    const index = tasks.findIndex(t => t.Id === parseInt(id))
+    if (index === -1) {
+      throw new Error("Task not found")
+    }
+    tasks[index] = {
+      ...tasks[index],
+      dueDate: dueDate,
+      updatedAt: new Date().toISOString()
+    }
+    return { ...tasks[index] }
   }
 }

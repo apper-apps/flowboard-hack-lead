@@ -6,6 +6,7 @@ import Dashboard from "@/components/pages/Dashboard"
 import Projects from "@/components/pages/Projects"
 import ProjectDetail from "@/components/pages/ProjectDetail"
 import MyTasks from "@/components/pages/MyTasks"
+import Calendar from "@/components/pages/Calendar"
 import Team from "@/components/pages/Team"
 import Settings from "@/components/pages/Settings"
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="projects" element={<Projects />} />
             <Route path="projects/:id" element={<ProjectDetail />} />
             <Route path="my-tasks" element={<MyTasks />} />
+            <Route path="calendar" element={<Calendar />} />
             <Route path="team" element={<Team />} />
             <Route path="settings" element={<Settings />} />
           </Route>
