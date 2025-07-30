@@ -19,11 +19,12 @@ export const projectService = {
     return { ...project }
   },
 
-  async create(projectData) {
+async create(projectData) {
     await delay(400)
     const newProject = {
       Id: Math.max(...projects.map(p => p.Id)) + 1,
       ...projectData,
+      attachments: projectData.attachments || [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       completionPercentage: 0
@@ -31,16 +32,16 @@ export const projectService = {
     projects.push(newProject)
     return { ...newProject }
   },
-
   async update(id, projectData) {
     await delay(300)
-    const index = projects.findIndex(p => p.Id === parseInt(id))
+const index = projects.findIndex(p => p.Id === parseInt(id))
     if (index === -1) {
       throw new Error("Project not found")
     }
     projects[index] = {
       ...projects[index],
       ...projectData,
+      attachments: projectData.attachments || projects[index].attachments || [],
       updatedAt: new Date().toISOString()
     }
     return { ...projects[index] }

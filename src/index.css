@@ -84,6 +84,39 @@
   @apply !bg-primary/5 !border-primary/30 !border-dashed !border-2;
 }
 
+/* File Upload Styles */
+.file-upload-zone {
+  @apply relative overflow-hidden;
+}
+
+.file-upload-zone:hover {
+  @apply shadow-md;
+}
+
+.file-upload-zone.drag-over {
+  @apply bg-primary/10 border-primary scale-105 shadow-lg;
+}
+
+.file-upload-zone.drag-over .upload-icon {
+  @apply text-primary scale-110;
+}
+
+.file-progress-bar {
+  @apply w-full bg-gray-200 rounded-full h-1 overflow-hidden;
+}
+
+.file-progress-fill {
+  @apply h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-300 ease-out rounded-full;
+}
+
+.file-item {
+  @apply flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200;
+}
+
+.file-item:hover {
+  @apply transform translate-y-[-1px];
+}
+
 /* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;

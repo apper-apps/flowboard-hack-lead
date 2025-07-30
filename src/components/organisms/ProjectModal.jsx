@@ -4,10 +4,10 @@ import Button from "@/components/atoms/Button"
 import Input from "@/components/atoms/Input"
 import FormField from "@/components/molecules/FormField"
 import ApperIcon from "@/components/ApperIcon"
+import FileUpload from "@/components/atoms/FileUpload"
 import { projectService } from "@/services/api/projectService"
-
 const ProjectModal = ({ project, isOpen, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: "",
     description: "",
     status: "Planning",
@@ -15,8 +15,8 @@ const ProjectModal = ({ project, isOpen, onClose, onSave }) => {
   })
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
-
-  useEffect(() => {
+  const [attachments, setAttachments] = useState([])
+useEffect(() => {
     if (project) {
       setFormData({
         title: project.title || "",
@@ -24,6 +24,7 @@ const ProjectModal = ({ project, isOpen, onClose, onSave }) => {
         status: project.status || "Planning",
         deadline: project.deadline ? project.deadline.split('T')[0] : ""
       })
+      setAttachments(project.attachments || [])
     } else {
       setFormData({
         title: "",
@@ -31,10 +32,10 @@ const ProjectModal = ({ project, isOpen, onClose, onSave }) => {
         status: "Planning",
         deadline: ""
       })
+      setAttachments([])
     }
     setErrors({})
   }, [project, isOpen])
-
   const validateForm = () => {
     const newErrors = {}
     
@@ -54,7 +55,7 @@ const ProjectModal = ({ project, isOpen, onClose, onSave }) => {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault()
     
     if (!validateForm()) {
@@ -66,7 +67,8 @@ const ProjectModal = ({ project, isOpen, onClose, onSave }) => {
       
       const projectData = {
         ...formData,
-        deadline: new Date(formData.deadline).toISOString()
+        deadline: new Date(formData.deadline).toISOString(),
+        attachments: attachments
       }
 
       let savedProject
@@ -162,12 +164,27 @@ return (
                 label="Deadline"
                 required
                 error={errors.deadline}
-              >
+>
                 <Input
                   type="date"
                   value={formData.deadline}
                   onChange={(e) => setFormData(prev => ({ ...prev, deadline: e.target.value }))}
                   error={errors.deadline}
+                />
+              </FormField>
+
+              {/* File Attachments */}
+              <FormField
+                label="Project Files"
+                error={errors.attachments}
+                className="col-span-2"
+              >
+                <FileUpload
+                  files={attachments}
+                  onFilesChange={setAttachments}
+                  maxFiles={15}
+                  maxSize={50 * 1024 * 1024} // 50MB for projects
+                  acceptedTypes={['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt', '.jpg', '.jpeg', '.png', '.gif', '.zip', '.rar', '.7z']}
                 />
               </FormField>
             </div>

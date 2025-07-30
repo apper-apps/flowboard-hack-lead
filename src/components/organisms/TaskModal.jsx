@@ -8,22 +8,23 @@ import StatusBadge from "@/components/molecules/StatusBadge"
 import PriorityBadge from "@/components/molecules/PriorityBadge"
 import Avatar from "@/components/atoms/Avatar"
 import ApperIcon from "@/components/ApperIcon"
+import FileUpload from "@/components/atoms/FileUpload"
 import { taskService } from "@/services/api/taskService"
 import { commentService } from "@/services/api/commentService"
 import { userService } from "@/services/api/userService"
-
 const TaskModal = ({ task, isOpen, onClose, onUpdate }) => {
-  const [isEditing, setIsEditing] = useState(false)
+const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({})
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState("")
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [currentUser] = useState({ Id: 1, name: "Alex Johnson" }) // Mock current user
-
-  useEffect(() => {
+  const [attachments, setAttachments] = useState([])
+useEffect(() => {
     if (task && isOpen) {
       setFormData(task)
+      setAttachments(task.attachments || [])
       loadComments()
       loadUsers()
     }
@@ -51,10 +52,13 @@ const TaskModal = ({ task, isOpen, onClose, onUpdate }) => {
     return users.find(user => user.Id === parseInt(userId))
   }
 
-  const handleSave = async () => {
+const handleSave = async () => {
     try {
       setLoading(true)
-      const updatedTask = await taskService.update(task.Id, formData)
+      const updatedTask = await taskService.update(task.Id, {
+        ...formData,
+        attachments: attachments
+      })
       onUpdate?.(updatedTask)
       setIsEditing(false)
       toast.success("Task updated successfully")
@@ -267,11 +271,71 @@ const TaskModal = ({ task, isOpen, onClose, onUpdate }) => {
                         onClick={() => handleStatusChange(status)}
                         disabled={formData.status === status}
                       >
-                        {status}
+{status}
                       </Button>
                     ))}
                   </div>
                 </>
+              )}
+            </div>
+
+            {/* File Attachments Section */}
+            <div className="border-t border-gray-100 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                  <ApperIcon name="Paperclip" size={16} />
+                  File Attachments
+                </h3>
+                {!isEditing && attachments.length > 0 && (
+                  <span className="text-xs text-gray-500">
+                    {attachments.length} file{attachments.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+
+              {isEditing ? (
+                <FileUpload
+                  files={attachments}
+                  onFilesChange={setAttachments}
+                  maxFiles={10}
+                  maxSize={25 * 1024 * 1024} // 25MB for tasks
+                  acceptedTypes={['.pdf', '.doc', '.docx', '.txt', '.jpg', '.jpeg', '.png', '.gif', '.zip', '.rar']}
+                />
+              ) : (
+                <div className="space-y-2">
+                  {attachments.length > 0 ? (
+                    <div className="grid gap-2">
+                      {attachments.map((file) => (
+                        <div
+                          key={file.id}
+                          className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
+                        >
+                          <ApperIcon name="File" size={16} className="text-gray-500" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-gray-700 truncate">
+                              {file.name}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {Math.round(file.size / 1024)} KB • {format(new Date(file.uploadedAt), 'MMM d, yyyy')}
+                            </p>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => toast.info(`Downloading ${file.name}`)}
+                            className="text-gray-500 hover:text-primary"
+                          >
+                            <ApperIcon name="Download" size={16} />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500 text-center py-4">
+                      No files attached
+                    </p>
+                  )}
+                </div>
               )}
             </div>
 

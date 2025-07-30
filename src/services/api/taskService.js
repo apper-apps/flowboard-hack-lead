@@ -29,11 +29,12 @@ export const taskService = {
     return tasks.filter(t => t.assigneeId === assigneeId)
   },
 
-  async create(taskData) {
+async create(taskData) {
     await delay(400)
     const newTask = {
       Id: Math.max(...tasks.map(t => t.Id)) + 1,
       ...taskData,
+      attachments: taskData.attachments || [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     }
@@ -41,7 +42,7 @@ export const taskService = {
     return { ...newTask }
   },
 
-  async update(id, taskData) {
+async update(id, taskData) {
     await delay(300)
     const index = tasks.findIndex(t => t.Id === parseInt(id))
     if (index === -1) {
@@ -50,6 +51,7 @@ export const taskService = {
     tasks[index] = {
       ...tasks[index],
       ...taskData,
+      attachments: taskData.attachments || tasks[index].attachments || [],
       updatedAt: new Date().toISOString()
     }
     return { ...tasks[index] }
