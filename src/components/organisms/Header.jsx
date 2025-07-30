@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 import Button from "@/components/atoms/Button"
 import Avatar from "@/components/atoms/Avatar"
 import SearchBar from "@/components/molecules/SearchBar"
@@ -9,8 +10,7 @@ const Header = ({ onMobileMenuToggle }) => {
   const navigate = useNavigate()
   const [showUserMenu, setShowUserMenu] = useState(false)
 
-const { useSelector } = require('react-redux');
-  const userState = useSelector((state) => state.user);
+const userState = useSelector((state) => state.user);
   const currentUser = userState?.user || {
     name: "User",
     email: "user@company.com",
