@@ -1,0 +1,58 @@
+[
+  {
+    "Id": 1,
+    "taskId": 1,
+    "userId": "2",
+    "content": "Design system is complete and ready for review. All components follow the established guidelines.",
+    "createdAt": "2024-02-10T16:20:00.000Z"
+  },
+  {
+    "Id": 2,
+    "taskId": 2,
+    "userId": "2",
+    "content": "Wireframes approved by stakeholders. Moving to visual design phase.",
+    "createdAt": "2024-02-18T14:45:00.000Z"
+  },
+  {
+    "Id": 3,
+    "taskId": 3,
+    "userId": "1",
+    "content": "Development environment is 80% complete. Working on final build configurations.",
+    "createdAt": "2024-02-05T09:30:00.000Z"
+  },
+  {
+    "Id": 4,
+    "taskId": 4,
+    "userId": "3",
+    "content": "Content migration complete, pending final SEO review before approval.",
+    "createdAt": "2024-02-28T11:15:00.000Z"
+  },
+  {
+    "Id": 5,
+    "taskId": 6,
+    "userId": "4",
+    "content": "Market research shows strong demand for booking features. Updating requirements doc.",
+    "createdAt": "2024-02-01T13:20:00.000Z"
+  },
+  {
+    "Id": 6,
+    "taskId": 8,
+    "userId": "5",
+    "content": "Social media strategy approved by marketing team. Ready to implement campaigns.",
+    "createdAt": "2024-01-28T16:30:00.000Z"
+  },
+  {
+    "Id": 7,
+    "taskId": 9,
+    "userId": "2",
+    "content": "Email templates designed and tested across major email clients. Looking good!",
+    "createdAt": "2024-02-02T10:45:00.000Z"
+  },
+  {
+    "Id": 8,
+    "taskId": 11,
+    "userId": "1",
+    "content": "OAuth integration complete. Working on two-factor authentication implementation.",
+    "createdAt": "2024-02-01T11:00:00.000Z"
+  }
+]

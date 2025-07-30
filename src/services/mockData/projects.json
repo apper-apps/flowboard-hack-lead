@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "title": "Website Redesign",
+    "description": "Complete overhaul of company website with modern design and improved user experience",
+    "status": "Active",
+    "deadline": "2024-03-15T00:00:00.000Z",
+    "createdAt": "2024-01-10T09:00:00.000Z",
+    "updatedAt": "2024-02-01T14:30:00.000Z",
+    "completionPercentage": 65
+  },
+  {
+    "Id": 2,
+    "title": "Mobile App Development",
+    "description": "Native iOS and Android app for customer engagement and service booking",
+    "status": "Planning",
+    "deadline": "2024-05-30T00:00:00.000Z",
+    "createdAt": "2024-01-15T10:00:00.000Z",
+    "updatedAt": "2024-01-20T16:45:00.000Z",
+    "completionPercentage": 15
+  },
+  {
+    "Id": 3,
+    "title": "Marketing Campaign Q1",
+    "description": "Comprehensive marketing strategy for Q1 product launch including social media, email, and PR",
+    "status": "Active",
+    "deadline": "2024-03-31T00:00:00.000Z",
+    "createdAt": "2024-01-05T08:30:00.000Z",
+    "updatedAt": "2024-02-05T11:20:00.000Z",
+    "completionPercentage": 45
+  },
+  {
+    "Id": 4,
+    "title": "Data Migration",
+    "description": "Migrate legacy system data to new cloud infrastructure with zero downtime",
+    "status": "Completed",
+    "deadline": "2024-01-31T00:00:00.000Z",
+    "createdAt": "2023-12-01T09:00:00.000Z",
+    "updatedAt": "2024-01-28T17:00:00.000Z",
+    "completionPercentage": 100
+  },
+  {
+    "Id": 5,
+    "title": "Team Training Program",
+    "description": "Comprehensive training program for new project management tools and processes",
+    "status": "On Hold",
+    "deadline": "2024-04-15T00:00:00.000Z",
+    "createdAt": "2024-01-20T11:00:00.000Z",
+    "updatedAt": "2024-01-25T09:15:00.000Z",
+    "completionPercentage": 25
+  },
+  {
+    "Id": 6,
+    "title": "Customer Portal",
+    "description": "Self-service customer portal with account management and support ticket system",
+    "status": "Active",
+    "deadline": "2024-04-30T00:00:00.000Z",
+    "createdAt": "2024-01-12T13:00:00.000Z",
+    "updatedAt": "2024-02-03T10:30:00.000Z",
+    "completionPercentage": 35
+  }
+]
