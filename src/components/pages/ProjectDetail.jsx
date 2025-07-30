@@ -224,9 +224,10 @@ const ProjectDetail = () => {
 
       {/* Content */}
       <div className="min-h-[600px]">
-        {activeView === "kanban" && (
+{activeView === "kanban" && (
           <KanbanBoard
             projectId={id}
+            tasks={tasks}
             onTaskClick={handleTaskClick}
             onNewTask={handleNewTask}
           />

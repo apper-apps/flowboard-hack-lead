@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { toast } from "react-toastify"
-import TaskCard from "@/components/organisms/TaskCard"
-import Button from "@/components/atoms/Button"
-import ApperIcon from "@/components/ApperIcon"
-import { taskService } from "@/services/api/taskService"
-import { userService } from "@/services/api/userService"
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { userService } from "@/services/api/userService";
+import { taskService } from "@/services/api/taskService";
+import ApperIcon from "@/components/ApperIcon";
+import TaskCard from "@/components/organisms/TaskCard";
+import Button from "@/components/atoms/Button";
 
 const KanbanBoard = ({ projectId, onTaskClick, onNewTask }) => {
   const [tasks, setTasks] = useState([])
@@ -25,15 +25,17 @@ const KanbanBoard = ({ projectId, onTaskClick, onNewTask }) => {
     loadData()
   }, [projectId])
 
-  const loadData = async () => {
+const loadData = async () => {
     try {
       setLoading(true)
       setError("")
-      const [tasksData, usersData] = await Promise.all([
-        taskService.getByProject(projectId),
-        userService.getAll()
-      ])
-      setTasks(tasksData)
+      const usersData = await userService.getAll()
+      
+      if (projectId) {
+        const tasksData = await taskService.getByProject(projectId)
+        setTasks(tasksData)
+      }
+      
       setUsers(usersData)
     } catch (err) {
       setError(err.message)
