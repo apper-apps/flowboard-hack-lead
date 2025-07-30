@@ -6,7 +6,7 @@ import ApperIcon from "@/components/ApperIcon";
 import TaskCard from "@/components/organisms/TaskCard";
 import Button from "@/components/atoms/Button";
 
-const KanbanBoard = ({ projectId, onTaskClick, onNewTask }) => {
+const KanbanBoard = ({ projectId, onTaskClick, onNewTask, onTaskStatusChange }) => {
   const [tasks, setTasks] = useState([])
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -45,12 +45,20 @@ const loadData = async () => {
     }
   }
 
-  const handleStatusChange = async (taskId, newStatus) => {
+const handleStatusChange = async (taskId, newStatus) => {
     try {
       await taskService.updateStatus(taskId, newStatus)
-      setTasks(prev => prev.map(task => 
+      const updatedTasks = tasks.map(task => 
         task.Id === taskId ? { ...task, status: newStatus } : task
-      ))
+      )
+      setTasks(updatedTasks)
+      
+      // Notify parent component of the status change
+      if (onTaskStatusChange) {
+        const updatedTask = updatedTasks.find(task => task.Id === taskId)
+        onTaskStatusChange(updatedTask)
+      }
+      
       toast.success("Task status updated")
     } catch (err) {
       toast.error("Failed to update task status")

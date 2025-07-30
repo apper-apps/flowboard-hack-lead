@@ -88,6 +88,11 @@ const ProjectDetail = () => {
   const handleNewTask = () => {
     setShowTaskForm(true)
   }
+const handleTaskStatusChange = (updatedTask) => {
+    setTasks(prev => prev.map(task => 
+      task.Id === updatedTask.Id ? updatedTask : task
+    ))
+  }
 
   const handleTaskSave = (savedTask) => {
     setTasks(prev => [...prev, savedTask])
@@ -225,11 +230,12 @@ const ProjectDetail = () => {
       {/* Content */}
       <div className="min-h-[600px]">
 {activeView === "kanban" && (
-          <KanbanBoard
+<KanbanBoard
             projectId={id}
             tasks={tasks}
             onTaskClick={handleTaskClick}
             onNewTask={handleNewTask}
+            onTaskStatusChange={handleTaskStatusChange}
           />
         )}
         
